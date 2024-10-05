@@ -1,0 +1,7 @@
+#!/usr/bin/env -S sbcl --script
+
+(load "main.cl")
+;;(load (compile-file "main.cl"))
+
+(greeting)
+

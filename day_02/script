@@ -1,0 +1,21 @@
+#!/usr/bin/env -S sbcl --script
+
+(load "main.cl")
+
+(format t (get-genre (make-movie "Alien" 1979 "SciFi" "Ridley Scott")))
+
+;;bunch of format directives tests:
+
+(format t "~a" "Ridley Scott")
+(format t "~a" :director)
+(format t "~a:~10t~a" :director "Ridley Scott")
+(format t "~{~a ~}~%" (list 1 2 3 4 5))
+
+;;
+
+(add-movie (make-movie "Alien" 1979 "SciFi" "Ridley Scott"))
+(add-movie (make-movie "Blade Runner" 1982 "SciFi" "Ridley Scott"))
+(print-movies)
+
+(prompt-for-movie)
+
