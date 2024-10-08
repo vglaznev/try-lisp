@@ -74,3 +74,17 @@
 		(if year (equal (getf movie :year) year) t)
 		(if genre (equal (getf movie :genre) genre) t)
 		(if director (equal (getf movie :director) director) t))))
+
+(defun update (selector-fn &key title year genre director)
+  (setf *movies*
+        (mapcar
+         #'(lambda (row)
+             (when (funcall selector-fn row)
+               (if title    (setf (getf row :title) title))
+               (if year   	(setf (getf row :year) year))
+               (if genre   	(setf (getf row :genre) genre))
+               (if director (setf (getf row :director) director)))
+             row) *movies*)))
+
+(defun delete-rows (selector-fn)
+  (setf *movies* (remove-if selector-fn *movies*)))

@@ -50,3 +50,18 @@
 ;;
 
 (format t "~a~%" (select (where :year 1979 :director "Ridley Scott")))
+
+(update (where :year 1979) :year 1982)
+(delete-rows (where :title "Blade Runner"))
+(print-movies)
+
+;;macro test
+(defmacro backwards (expression) (reverse expression))
+(backwards ("Hello, world" "~a~%" t format))
+;;
+(format t "~a~%" (+ 1 2 (+ 3 4)))
+(format t "~a~%" '(+ 1 2 (+ 3 4)))
+(format t "~a~%" `(+ 1 2 (+ 3 4)))
+(format t "~a~%" `(+ 1 2 ,(+ 3 4)))
+(format t "~a~%" `(and 1 2 ,(list 3 4) 5))
+(format t "~a~%" `(and 1 2 ,@(list 3 4) 5))
