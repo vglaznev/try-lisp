@@ -34,3 +34,43 @@
 	(prompt-read "Genre")
 	(prompt-read "Director")))
 
+(defun save-movies (filename)
+  (with-open-file (out filename
+					   :direction :output
+					   :if-exists :supersede)
+	(with-standard-io-syntax
+	  (print *movies* out))))
+
+(defun load-movies (filename)
+  (with-open-file (in filename)
+	(with-standard-io-syntax
+	  (setf *movies* (read in)))))
+
+(defun select-movie-by-year (value)
+  (remove-if-not #'(lambda (movie) (equal (getf movie :year) value))
+				 *movies*))
+
+(defun select (selector-fn)
+  (remove-if-not selector-fn *movies*))
+
+(defun title-selector (title)
+  #'(lambda (movie) (equal (getf movie :title) title)))
+
+(defun year-selector (year)
+  #'(lambda (movie) (equal (getf movie :year) year)))
+
+(defun genre-selector (genre)
+  #'(lambda (movie) (equal (getf movie :genre) genre)))
+
+(defun director-selector (director)
+  #'(lambda (movie) (equal (getf movie :director) director)))
+
+;;
+
+(defun where (&key title year genre director)
+  #'(lambda (movie)
+	  (and 
+		(if title (equal (getf movie :title) title) t)
+		(if year (equal (getf movie :year) year) t)
+		(if genre (equal (getf movie :genre) genre) t)
+		(if director (equal (getf movie :director) director) t))))

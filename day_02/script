@@ -2,20 +2,51 @@
 
 (load "main.cl")
 
-(format t (get-genre (make-movie "Alien" 1979 "SciFi" "Ridley Scott")))
+;;(format t "~%" (get-genre (make-movie "Alien" 1979 "SciFi" "Ridley Scott")))
 
 ;;bunch of format directives tests:
 
-(format t "~a" "Ridley Scott")
-(format t "~a" :director)
-(format t "~a:~10t~a" :director "Ridley Scott")
-(format t "~{~a ~}~%" (list 1 2 3 4 5))
+;;(format t "~a~%" "Ridley Scott")
+;;(format t "~a~%" :director)
+;;(format t "~a:~10t~a~%" :director "Ridley Scott")
+;;(format t "~{~a ~}~%" (list 1 2 3 4 5))
+;;(format t "~%")
 
 ;;
 
 (add-movie (make-movie "Alien" 1979 "SciFi" "Ridley Scott"))
 (add-movie (make-movie "Blade Runner" 1982 "SciFi" "Ridley Scott"))
+(add-movie (make-movie "The Martian" 2015 "SciFi" "Ridley Scott"))
+(add-movie (make-movie "Prometheus" 2012 "SciFi" "Ridley Scott"))
+
+(print-movies)
+(save-movies "movies.db")
+(setf *movies* nil)
+(format t "~a~%" "-----------------------------------")
+(print-movies)
+(load-movies "movies.db")
 (print-movies)
 
-(prompt-for-movie)
+;;(prompt-for-movie)
 
+;;
+;;(format t "~a~%" (remove-if-not #'evenp '(1 2 3 4 5 6)))
+;;(format t "~a~%" (remove-if-not #'(lambda (x) (= 0 (mod x 2))) '(1 2 3 4 5 6)))
+;;
+
+(format t "~a~%" (select-movie-by-year 1982))
+
+(format t "~a~%" (select (year-selector 1979)))
+(format t "~a~%" (select (year-selector 2001)))
+
+(format t "~a~%" (select (director-selector "Ridley Scott")))
+(format t "~a~%" (select (genre-selector "SciFi")))
+(format t "~a~%" (select (title-selector "The Martian")))
+
+;;
+;;(defun foo (&key a (b 20) (c 30 c-p)) (list a b c c-p))
+;;(format t "~a~%" (foo :a 10 :b 11 :c 12))
+;;(format t "~a~%" (foo))
+;;
+
+(format t "~a~%" (select (where :year 1979 :director "Ridley Scott")))
