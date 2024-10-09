@@ -88,3 +88,13 @@
 
 (defun delete-rows (selector-fn)
   (setf *movies* (remove-if selector-fn *movies*)))
+
+(defun comp-gn (field value)
+ `(equal (getf movie ,field) ,value)) 
+
+(defun comp-list-gn (fields)
+  (loop while fields
+		collecting (comp-gn (pop fields) (pop fields))))
+
+(defmacro where1 (&rest clauses)
+  `#'(lambda (movie) (and ,@(comp-list-gn clauses))))

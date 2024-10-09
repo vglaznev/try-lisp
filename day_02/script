@@ -65,3 +65,8 @@
 (format t "~a~%" `(+ 1 2 ,(+ 3 4)))
 (format t "~a~%" `(and 1 2 ,(list 3 4) 5))
 (format t "~a~%" `(and 1 2 ,@(list 3 4) 5))
+;;
+
+(format t "~a~%" (macroexpand-1 '(where1 :title "Alien" :year 1982)))
+(update (where1 :title "Alien" :year 1982) :year 1979)
+(print-movies)
